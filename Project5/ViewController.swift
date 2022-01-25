@@ -43,7 +43,7 @@ class ViewController: UITableViewController{
     }
     
     @objc func refresh() {
-        viewDidLoad()
+        startGame()
     }
     
     @objc func promptForAnswer() {
@@ -62,9 +62,11 @@ class ViewController: UITableViewController{
     
     func submit (_ answer: String) {
         let lowerAnswer = answer.lowercased()
-        let errorTitle : String
-        let errorMessage : String
-        if isPossible(word: lowerAnswer) {
+        var errorTitle : String
+        var errorMessage : String
+        
+        if lowerAnswer.count >= 3 {
+           if isPossible(word: lowerAnswer) {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
                     usedWords.insert(answer, at: 0)
@@ -73,18 +75,24 @@ class ViewController: UITableViewController{
                     return
                 }
                 else {
-                    errorTitle = "Kelime tanımlı değil."
-                    errorMessage = "Lütfen tanımlı bir kelime giriniz."
+                    errorTitle = "Lütfen tanımlı bir kelime giriniz."
+                    errorMessage = "Kelime tanımlı değil."
                 }
             }
             else {
                 errorTitle = "Kelime daha önce girilmiş."
                 errorMessage = "Lütfen daha önceden girmediğiniz bir kelime giriniz."
             }
-        }else {
-            guard let title = title?.lowercased() else {return}
-            errorTitle = "Geçersiz kelime"
-            errorMessage = "Bu kelime \(title) kelimesinden türetilemez. "
+           }
+            else {
+                guard let title = title?.lowercased() else {return}
+                errorTitle = "Geçersiz kelime"
+                errorMessage = "Bu kelime \(title) kelimesinden türetilemez. "
+            }
+        }
+        else {
+            errorTitle = "Kelime çok kısa"
+            errorMessage = "Yazdığınız kelime en az 3 harf içermeli."
         }
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -114,8 +122,9 @@ class ViewController: UITableViewController{
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         //return misspelledRange.location == NSNotFound
-        if misspelledRange.location == NSNotFound {
+        if misspelledRange.location == NSNotFound{
             return true
+
         } else {
             return false
         }
