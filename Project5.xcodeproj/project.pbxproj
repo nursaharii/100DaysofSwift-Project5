@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8451D59927A067B400E5B87B /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8451D59827A067B400E5B87B /* start.txt */; };
 		848371D8279F2A14006905CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848371D7279F2A14006905CD /* AppDelegate.swift */; };
 		848371DA279F2A14006905CD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848371D9279F2A14006905CD /* SceneDelegate.swift */; };
 		848371DC279F2A14006905CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848371DB279F2A14006905CD /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8451D59827A067B400E5B87B /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = start.txt; path = "../../../Downloads/HackingWithSwift-main/Classic/project5-files/start.txt"; sourceTree = "<group>"; };
 		848371D4279F2A14006905CD /* Project5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848371D7279F2A14006905CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		848371D9279F2A14006905CD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				848371D9279F2A14006905CD /* SceneDelegate.swift */,
 				848371DB279F2A14006905CD /* ViewController.swift */,
 				848371DD279F2A14006905CD /* Main.storyboard */,
+				8451D59827A067B400E5B87B /* start.txt */,
 				848371E0279F2A15006905CD /* Assets.xcassets */,
 				848371E2279F2A15006905CD /* LaunchScreen.storyboard */,
 				848371E5279F2A15006905CD /* Info.plist */,
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				848371E4279F2A15006905CD /* LaunchScreen.storyboard in Resources */,
+				8451D59927A067B400E5B87B /* start.txt in Resources */,
 				848371E1279F2A15006905CD /* Assets.xcassets in Resources */,
 				848371DF279F2A14006905CD /* Main.storyboard in Resources */,
 			);

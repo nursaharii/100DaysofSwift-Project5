@@ -17,6 +17,7 @@ class ViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
         cell.textLabel?.text = usedWords[indexPath.row]
+        cell.backgroundColor = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: .random(in: 0...1))
         return cell
     }
     override func viewDidLoad() {
@@ -24,17 +25,15 @@ class ViewController: UITableViewController{
         // Do any additional setup after loading the view.
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        if let startWordsURL = Bundle.main.url(forResource: "start",withExtension: "txt") {
-            if let startWords = try? String(contentsOf: startWordsURL) {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        if let startWordsPath = Bundle.main.path(forResource: "start", ofType: "txt") {
+            if let startWords = try? String(contentsOfFile: startWordsPath) {
                 allWords = startWords.components(separatedBy: "\n")
             }
-        }
-        
-        if allWords.isEmpty {
+        } else {
             allWords = ["silkworm"]
         }
         startGame()
-        
     }
     
     func startGame() {
@@ -42,7 +41,10 @@ class ViewController: UITableViewController{
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
     }
-
+    
+    @objc func refresh() {
+        viewDidLoad()
+    }
     
     @objc func promptForAnswer() {
         
@@ -60,16 +62,33 @@ class ViewController: UITableViewController{
     
     func submit (_ answer: String) {
         let lowerAnswer = answer.lowercased()
-        
+        let errorTitle : String
+        let errorMessage : String
         if isPossible(word: lowerAnswer) {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
                     usedWords.insert(answer, at: 0)
                     let indexPath = IndexPath(row: 0, section: 0)
                     tableView.insertRows(at: [indexPath], with: .automatic)
+                    return
+                }
+                else {
+                    errorTitle = "Kelime tanımlı değil."
+                    errorMessage = "Lütfen tanımlı bir kelime giriniz."
                 }
             }
+            else {
+                errorTitle = "Kelime daha önce girilmiş."
+                errorMessage = "Lütfen daha önceden girmediğiniz bir kelime giriniz."
+            }
+        }else {
+            guard let title = title?.lowercased() else {return}
+            errorTitle = "Geçersiz kelime"
+            errorMessage = "Bu kelime \(title) kelimesinden türetilemez. "
         }
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     func isPossible(word: String) -> Bool {
